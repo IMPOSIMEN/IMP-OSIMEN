@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajo carla Alberto y Amin</title>
+    <link rel="stylesheet" href="servicios.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+</head>
+<body>
+    <style>
+        #background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.navbar, .game-container {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+    </style>
+    <!-- Fondo animado -->
+    <video autoplay muted loop id="background-video">
+        <source src="video.mp4" type="video/mp4">
+        Tu navegador no soporta videos en HTML5.
+    </video>
+
+    <!-- Navbar futurista -->
+    <nav class="navbar">
+        <h1 class="logo" data-aos="zoom-in" data-aos-duration="1000">
+            <span>IMP OSIMEN</span>
+        </h1>
+        <ul class="menu">
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100"><a href="Index.html">Inicio</a></li>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"><a href="Servicios.html">Servicios</a></li>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300"><a href="Juegos.html">Juegos</a></li>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400"><a href="sobrenosotros.html">Sobre Nosotros</a></li>
+        </ul>
+    </nav>
+
+    <!-- Contenedor de círculos -->
+    <div class="container">
+        <div class="circle"><img src="imagenes/imagen1.jpg" alt="Imagen 1"></div>
+        <div class="circle"><img src="imagenes/imagen2.jpg" alt="Imagen 2"></div>
+        <div class="circle"><img src="imagenes/imagen3.jpg" alt="Imagen 3"></div>
+        <div class="circle"><img src="imagenes/imagen4.jpg" alt="Imagen 4"></div>
+        <div class="circle"><img src="imagenes/imagen5.jpg" alt="Imagen 5"></div>
+        <div class="circle"><img src="imagenes/imagen6.jpg" alt="Imagen 6"></div>
+    </div>
+
+    <script>
+        AOS.init();
+    </script>
+</body>
+</html>

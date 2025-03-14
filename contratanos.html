@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trabajo carla Alberto y Amin</title>
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css"> 
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;800&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+            background: black;
+            color: cyan;
+            text-align: center;
+        }
+
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(0, 0, 0, 0.8);
+            border-bottom: 2px solid cyan;
+            box-shadow: 0 0 10px cyan;
+            z-index: 1000;
+        }
+
+        nav h1 {
+            font-size: 1.8rem;
+            color: #db4500;
+            text-shadow: 0 0 10px #db4500, 0 0 20px cyan;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: cyan;
+            font-size: 1.2rem;
+            transition: 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #db4500;
+            text-shadow: 0 0 10px cyan;
+        }
+
+        
+        .contact-container {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.8);
+            padding: 30px;
+            border-radius: 10px;
+            border: 2px solid cyan;
+            box-shadow: 0 0 15px cyan, 0 0 30px magenta;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translate(-50%, -55%); }
+            to { opacity: 1; transform: translate(-50%, -50%); }
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: transparent;
+            border: 2px solid cyan;
+            color: cyan;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.4s;
+        }
+
+        input:focus, textarea:focus {
+            border-color: magenta;
+            box-shadow: 0 0 10px cyan, 0 0 20px magenta;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: 2px solid cyan;
+            background: transparent;
+            color: cyan;
+            cursor: pointer;
+            position: relative;
+            transition: 0.4s;
+        }
+
+        .btn:hover {
+            background: cyan;
+            color: black;
+            box-shadow: 0 0 10px cyan, 0 0 20px cyan;
+        }
+
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+        }
+        #background-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.navbar, .game-container {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+    </style>
+    <video autoplay muted loop id="background-video">
+        <source src="video.mp4" type="video/mp4">
+    </video>
+</head>
+<body>
+
+    <canvas id="background"></canvas>
+
+    
+    <nav>
+        <h1 data-aos="zoom-in" data-aos-duration="1000"> <span style="color: #db4500;">IMP OSIMEN</span></h1>
+        <ul>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="100"><a class="active" href="Index.html">Inicio</a></li>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"><a href="Servicios.html">Servicios</a></li>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="300"><a href="Juegos.html">Juegos</a></li>
+            <li data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400"><a href="sobrenosotros.html">Sobre Nosotros</a></li>
+        </ul>
+    </nav>
+
+    
+    <div class="contact-container">
+        <h1>Contacto</h1>
+        <form>
+            <input type="text" placeholder="Nombre" required>
+            <input type="email" placeholder="Correo Electrónico" required>
+            <textarea rows="4" placeholder="Mensaje" required></textarea>
+            <button class="btn">Enviar</button>
+        </form>
+    </div>
+
+    <script>
+        
+        const canvas = document.getElementById('background');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+
+        class Particle {
+            constructor(x, y, size, speedX, speedY) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speedX = speedX;
+                this.speedY = speedY;
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.size > 0.2) this.size -= 0.1;
+            }
+
+            draw() {
+                ctx.fillStyle = 'cyan';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function createParticles(e) {
+            for (let i = 0; i < 10; i++) {
+                let size = Math.random() * 5 + 1;
+                let speedX = (Math.random() - 0.5) * 2;
+                let speedY = (Math.random() - 0.5) * 2;
+                particles.push(new Particle(e.x, e.y, size, speedX, speedY));
+            }
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                if (particles[i].size <= 0.2) {
+                    particles.splice(i, 1);
+                    i--;
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+
+        window.addEventListener('mousemove', createParticles);
+        animateParticles();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        
+        document.addEventListener("DOMContentLoaded", function() {
+            AOS.init();
+        });
+
+    </script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+</body>
+</html>
